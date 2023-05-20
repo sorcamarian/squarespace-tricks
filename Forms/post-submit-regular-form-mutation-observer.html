@@ -1,0 +1,33 @@
+<script>
+document.addEventListener("DOMContentLoaded", function(event) {
+    var formWrapper = document.querySelector(".form-wrapper");
+
+    // Options for the observer (which mutations to observe)
+    var config = { childList: true };
+
+    // Callback function to execute when mutations are observed
+    var callback = function(mutationList) {
+        // console.log(mutationList);
+        mutationList.forEach( function(mutation) {
+            // console.log(mutation);
+            if(mutation.addedNodes.length) {
+                mutation.addedNodes.forEach(function(addedNode) {
+                    if(addedNode.classList.contains("form-contents")) {
+                        // Do some JavaScript magic
+                        // Do some JavaScript magic
+                        // Do some JavaScript magic
+                        document.body.classList.add("form-submitted-successfully");
+                    } 
+                });
+            }
+        });
+    };
+
+    // Create an observer instance linked to the callback function
+    var observer = new MutationObserver(callback);
+
+    // Start observing the target node for configured mutations
+    observer.observe(formWrapper, config);
+
+});
+</script>

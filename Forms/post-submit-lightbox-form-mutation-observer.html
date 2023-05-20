@@ -1,0 +1,60 @@
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+         /*
+            a) Mutation Observer for a Lightbox Squarespace Form
+        */
+
+        // Look for Squarespace Lightbox Form
+        (function() {
+            var isSquarespaceLightboxForm = setInterval(function() {
+                var lightboxFormWrapper = document.querySelector(".sqs-modal-lightbox .form-wrapper .form-inner-wrapper");
+
+                if(lightboxFormWrapper) {
+                    clearInterval(isSquarespaceLightboxForm);
+                    startMutationObserver(lightboxFormWrapper);
+                }
+            }, 100);
+
+            // Stop checking for lightbox after 10 seconds
+            setTimeout(function() {
+                clearInterval(isSquarespaceLightboxForm);
+            }, 10000);
+
+        })();
+
+
+        // Mutation Observer 
+        function startMutationObserver(lightboxFormWrapper) {
+            // Mutation Observer example based on: https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver
+
+           
+            // Options for the observer (which mutations to observe)
+            var config = { childList: true };
+        
+            // Callback function to execute when mutations are observed
+            var callback = function(mutationList) {
+                // console.log(mutationList);
+                mutationList.forEach( function(mutation) {
+                    // console.log(mutation);
+                    if(mutation.addedNodes.length) {
+                        mutation.addedNodes.forEach(function(addedNode) {
+                            if(addedNode.classList.contains("form-contents")) {
+                                // Do some JavaScript magic
+                                // Do some JavaScript magic
+                                // Do some JavaScript magic
+                                document.body.classList.add("form-submitted-successfully")
+                            } 
+                        });
+                    }
+                });
+            };
+
+            // Create an observer instance linked to the callback function
+            var observer = new MutationObserver(callback);
+
+            // Start observing the target node for configured mutations
+            observer.observe(lightboxFormWrapper, config);
+
+        } // End of startMutationObserver()   
+    });
+</script>

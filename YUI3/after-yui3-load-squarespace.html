@@ -1,0 +1,28 @@
+<script>
+    (function() {
+    
+      var isYuiInterval = setInterval(function() {
+          if(typeof Y === "object") {
+              clearInterval(isYuiInterval);
+              // Optional
+              clearTimeout(safetyYuiTimeout);
+    
+              console.log("YUI is loaded");
+    
+              Y.on('domready', function () { 
+    
+                console.log("DOM is ready - YUI3 event");
+                
+              });
+    
+          }
+      }, 50);
+    
+      // Optional - if YUI3 is not loaded after 20 seconds, stop looking for it
+      var safetyYuiTimeout = setTimeout(function() {
+        console.log("20 seconds passed, stop looking for YUI3 load");
+        clearInterval(isYuiInterval);
+      }, 20000);
+    
+    })();          
+</script>

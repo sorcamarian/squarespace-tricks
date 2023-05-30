@@ -1,0 +1,31 @@
+<script>
+    (function() {
+      console.time("start looking for YUI3 load");
+    
+      var isYuiInterval = setInterval(function() {
+          if(typeof Y === "object") {
+              console.timeEnd("start looking for YUI3 load");
+              clearInterval(isYuiInterval);
+              // Optional
+              clearTimeout(safetyYuiTimeout);
+    
+              console.log("YUI is loaded");
+              console.time("YUI3 domready event")
+              Y.on('domready', function () { 
+    
+                console.timeEnd("YUI3 domready event");
+                console.log("DOM is ready - YUI3 event");
+                
+              });
+    
+          }
+      }, 50);
+    
+      // Optional - if YUI3 is not loaded after 20 seconds, stop looking for it
+      var safetyYuiTimeout = setTimeout(function() {
+        console.log("20 seconds passed, stop looking for YUI3 load");
+        clearInterval(isYuiInterval);
+      }, 20000);
+    
+    })();          
+</script>

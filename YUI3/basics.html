@@ -1,0 +1,29 @@
+<script>
+// If you need to wait untill the YUI3 is loaded on the page, for example on Squarespace 7.1
+//   then go to the file from this GitHub directory: "after-yui3-load-squarespace.html"
+
+
+// When the DOM is Ready
+Y.on('domready', function () { 
+    
+    console.log("DOM is ready - YUI3 event");
+    
+});
+
+// Selectors
+Y.one("#one-selector");
+Y.all(".multiple-elements");
+
+
+// AJAX
+Y.io("/link", {
+    method : "GET",
+    on     : {
+        success : function(event, response) {
+            console.log("success");
+            console.log("event", event);
+            console.log("response", response);
+        }
+    } 
+});
+</script>

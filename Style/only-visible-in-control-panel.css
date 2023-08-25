@@ -1,0 +1,7 @@
+
+/*
+    Show it only in the control panel and hide it on the live site
+*/
+body:not(.sqs-edit-mode) #sections > :last-child {
+    display : none;
+}

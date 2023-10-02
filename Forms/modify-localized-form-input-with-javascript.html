@@ -1,0 +1,33 @@
+<script>
+
+    // Changing a input value programmatically on Squarespace Localized Forms update in 2023
+    // Changing a input value programmatically on Squarespace Localized Forms update in 2023
+    // Changing a input value programmatically on Squarespace Localized Forms update in 2023
+
+    // Option 1 source: https://stackoverflow.com/questions/43438258/set-react-input-field-value-from-javascript-or-jquery/60378508#60378508
+    function changeValueVersion1(input, value) {
+
+        var nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+            window.HTMLInputElement.prototype,
+            "value"
+        ).set;
+        nativeInputValueSetter.call(input, value);
+
+        var inputEvent = new Event("input", {
+            bubbles: true
+        });
+        input.dispatchEvent(inputEvent);
+    }
+
+    // Option 2 
+    function changeValueVersion2(input, value) {
+        Object.defineProperty(input, "value", {
+            value: value, // Programmatically changed value
+            writable: true
+        });
+        var inputEvent = new Event('input', {
+            bubbles: true
+        });
+        input.dispatchEvent(inputEvent);
+    }
+</script>

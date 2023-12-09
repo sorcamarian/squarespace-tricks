@@ -30,4 +30,51 @@
         });
         input.dispatchEvent(inputEvent);
     }
+
+
+
+    /*
+        In case you want to make immediate modifications on the form with the above methods.
+        We need to check when the Squarespace React form was added
+    */
+
+    // 1. targetNode is the container or the form. If you have multiple forms, make sure to target the ".form-block" of that individual form.
+    // 2. Inside the function startMyChangesOnTheForm(), put the code that makes changes on the values of the form
+    
+    document.addEventListener("DOMContentLoaded", function(){
+
+        var targetNode = document.querySelector('.form-block');
+
+        // Options for the observer (which mutations to observe)
+        var config = { childList: true, subtree: true };
+
+        // Callback function to execute when mutations are observed
+        var callback = (mutationList, observer) => {    
+            mutationList.forEach(mutation => {
+                // debugger;
+                if( mutation.addedNodes.length ) {
+                    mutation.addedNodes.forEach(addedNode => {
+                        if(addedNode.classList.contains("react-form-contents")){
+                            console.warn("Found react form mutation");
+                            observer.disconnect();
+                            startMyChangesOnTheForm();
+                        }
+                    });
+                }
+            });
+            
+        };
+
+        // Create an observer instance linked to the callback function
+        const observer = new MutationObserver(callback);
+        // Start observing the target node for configured mutations
+        observer.observe(targetNode, config);
+
+
+        // Here is where we can add our code that will make changes to the form
+        function startMyChangesOnTheForm() {
+            // Do the programmatical canges on the form
+        }
+
+    });
 </script>

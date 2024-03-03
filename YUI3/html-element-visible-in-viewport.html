@@ -1,0 +1,22 @@
+<script>
+(function() {
+    var isYuiInterval = setInterval(function() {
+        if(typeof Y === "object") {
+            clearInterval(isYuiInterval);
+  
+            document.addEventListener("scroll", function() {
+
+                // The actual code that does the verification
+                // The method of YUI3 is called ".inViewportRegion()"
+                if(Y.one("#sections > :first-child").inViewportRegion() ) {
+                  console.log("first section is visible in the viewport")
+                } else {
+                    console.log("first section is NOT visible in the viewport")
+                }
+
+            });
+  
+        }
+    });
+  })();        
+</script>

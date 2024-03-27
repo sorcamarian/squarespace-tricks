@@ -1,0 +1,22 @@
+<!-- 
+    Check the YouTube video for the tutorial of this code 
+    https://youtu.be/pyhni8Plb7I
+-->
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        // The number describes the section number of the page
+        document.querySelector("#sections > :nth-child(4) .section-border").setAttribute("id", "test");
+
+        // If you need another scroll for another section
+        document.querySelector("#sections > :nth-child(3) .section-border").setAttribute("id", "test2");
+
+    });
+</script>
+    
+<style>
+    html {
+        scroll-behavior: smooth;
+    }
+</style>

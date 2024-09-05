@@ -12,6 +12,12 @@
     import 'https://flackr.github.io/scroll-timeline/dist/scroll-timeline.js';
     </script>
 <script>
+    // documentation
+    // https://developer.mozilla.org/en-US/docs/Web/API/ScrollTimeline
+    // https://github.com/flackr/scroll-timeline
+    // https://scroll-driven-animations.style/tools/view-timeline/ranges
+    // YouTube video https://youtu.be/-o3ORB2K37o
+
     document.addEventListener('DOMContentLoaded', () => {
 
         const sectionsDataIds = [
@@ -109,3 +115,51 @@
         });
     });
 </script>
+
+
+<!-- For debuggint in Developer Tools -->
+ <script>
+var container = document.querySelector('[data-section-id="66d8fdbbf706a423578f7f22"]'),
+    videoElement = container.querySelector('video');
+
+// Create ScrollTimeline
+var scrollTimeline = new ScrollTimeline({
+    source: document.documentElement,
+    axis: "block",
+    orientation: 'block'
+});
+
+// Define the animation
+window.animation1 = videoElement.animate(
+    { translate: [`0 0`, `0 -100vh`] },
+    {
+        duration: 1000,
+        fill: 'both',
+        timeline: scrollTimeline,
+        rangeStart: (function() {
+            // For native support
+            if( new ScrollTimeline() instanceof AnimationTimeline ) {
+                return {
+                    rangeName: 'entry',
+                    offset: new CSSUnitValue(40, 'percent')
+                }
+            // For polyfill 
+            } else {
+                return new CSSUnitValue(30, 'percent')
+            }
+    })(),
+    rangeEnd: (function() {
+        // For native support
+        if( new ScrollTimeline() instanceof AnimationTimeline ) {
+            return {
+                rangeName: 'exit',
+                offset: new CSSUnitValue(120, 'percent')
+            }
+        // For polyfill 
+        } else {
+                return new CSSUnitValue(90, 'percent')
+            }
+        })()  
+    }
+);    
+ </script>

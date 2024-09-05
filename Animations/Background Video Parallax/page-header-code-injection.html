@@ -1,0 +1,120 @@
+<style>
+    #header {
+        position: absolute !important;
+    }
+
+    #header.shrink {
+        background: transparent !important;
+    }
+</style>
+<style>
+    [data-section-id="66d8fdbbf706a423578f7f17"] video {
+        height: 900px !important;
+    }
+
+    [data-section-id="66d8fdbbf706a423578f7f22"] video {
+        height: 1000px !important
+    }
+</style>
+
+<script type="module">
+    import 'https://flackr.github.io/scroll-timeline/dist/scroll-timeline.js';
+    </script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const sectionsDataIds = [
+            '66d8fdbbf706a423578f7f17',
+            '66d8fdbbf706a423578f7f22'
+        ];
+
+        function handleVideoAppearance(videoElement, observer) {
+
+            // Create ScrollTimeline
+            var scrollTimeline = new ScrollTimeline({
+                source: document.documentElement,
+                axis: "block",
+                orientation: 'block'
+            });
+
+            // First section
+            if (videoElement.closest('section').getAttribute('data-section-id') ===
+                '66d8fdbbf706a423578f7f17') {
+                // Define the animation
+                videoElement.animate({
+                    translate: [`0 0`, `0 -3000px`]
+                }, {
+                    duration: 1000,
+                    fill: 'both',
+                    timeline: scrollTimeline,
+                    rangeStart: new CSSUnitValue(10, 'percent'),
+                    rangeEnd: new CSSUnitValue(100, 'percent')
+                });
+                // Second section
+            } else if (videoElement.closest('section').getAttribute('data-section-id') ===
+                '66d8fdbbf706a423578f7f22') {
+                // Define the animation
+                videoElement.animate({
+                    translate: [`0 0`, `0 -100vh`]
+                }, {
+                    duration: 1000,
+                    fill: 'both',
+                    timeline: scrollTimeline,
+                    rangeStart: (function () {
+                        // For native support
+                        if (new ScrollTimeline() instanceof AnimationTimeline) {
+                            return {
+                                rangeName: 'entry',
+                                offset: new CSSUnitValue(50, 'percent')
+                            }
+                        // For polyfill
+                        } else {
+                            return new CSSUnitValue(50, 'percent')
+                        }
+                    })(),
+                    rangeEnd: (function () {
+                        // For native support
+                        if (new ScrollTimeline() instanceof AnimationTimeline) {
+                            return {
+                                rangeName: 'exit',
+                                offset: new CSSUnitValue(120, 'percent')
+                            }
+                        // For polyfill
+                        } else {
+                            return new CSSUnitValue(120, 'percent')
+                        }
+                    })()
+                });
+            }
+
+            // Stop observing the video element
+            observer.disconnect();
+        }
+
+        sectionsDataIds.forEach(sectionId => {
+            var section = document.querySelector(`[data-section-id="${sectionId}"]`);
+
+            if (section) {
+                const observer = new MutationObserver((mutationsList, observer) => {
+                    for (const mutation of mutationsList) {
+                        if (mutation.type === 'childList') {
+                            mutation.addedNodes.forEach(node => {
+                                if (node.tagName === 'VIDEO') {
+                                    handleVideoAppearance(node, observer);
+                                }
+                            });
+                        }
+                    }
+                });
+
+                // Start observing the section for changes
+                observer.observe(section, {
+                    childList: true,
+                    subtree: true
+                });
+            } else {
+                console.error(`Section with ID ${sectionId} not found.`);
+            }
+        });
+    });
+</script>
